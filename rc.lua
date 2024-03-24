@@ -3,6 +3,7 @@ require("globals")
 
 require("core")
 
+require("scripts.autostart")
 require("theme")
 require("rice")
 require("services")
