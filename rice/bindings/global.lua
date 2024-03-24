@@ -14,10 +14,9 @@ local mebox = require("widget.mebox")
 local bindbox = require("widget.bindbox")
 local config = require("rice.config")
 
-
 local global_bindings = {
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super, mod.control },
         triggers = "j",
         path = "System",
@@ -25,142 +24,200 @@ local global_bindings = {
         on_press = function()
             mebox(menu_templates.power.shared):show({ placement = aplacement.centered }, { source = "keyboard" })
         end,
-    },
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.alt, mod.super, mod.control },
         triggers = "j",
         path = "System",
         description = "Stop power timer",
-        on_press = function() services.power.stop_timer() end,
-    },
+        on_press = function()
+            services.power.stop_timer()
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super, mod.control },
         triggers = "l",
         path = "System",
         description = "Lock session",
-        on_press = function() services.power.lock_screen() end,
-    },
+        on_press = function()
+            services.power.lock_screen()
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = btn.left,
         path = "Awesome",
         description = "Resize tiling clients",
-        on_press = function() cclient.mouse_resize() end,
-    },
+        on_press = function()
+            cclient.mouse_resize()
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = btn.right,
         path = "Awesome",
         description = "Show main menu",
-        on_press = function() main_menu:toggle(nil, { source = "mouse" }) end,
-    },
+        on_press = function()
+            main_menu:toggle(nil, { source = "mouse" })
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super, mod.control },
         triggers = "w",
         path = "Awesome",
         description = "Show main menu",
-        on_press = function() main_menu:show({ placement = aplacement.centered }, { source = "keyboard" }) end,
-    },
+        on_press = function()
+            main_menu:show({ placement = aplacement.centered }, { source = "keyboard" })
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "h",
         path = "Awesome",
         description = "Keyboard shortcuts",
-        on_press = function() bindbox.main:show() end,
-    },
+        on_press = function()
+            bindbox.main:show()
+        end,
+    }),
 
-    binding.new {
-        modifiers = { mod.super, mod.control },
+    binding.new({
+        modifiers = { mod.super, mod.shift },
         triggers = "r",
         path = "Awesome",
         description = "Restart Awesome",
-        on_press = function() capi.awesome.restart() end,
-    },
+        on_press = function()
+            capi.awesome.restart()
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "a",
-        path = "Launcher",
-        description = "Launcher",
-        on_press = function() awful.spawn(config.actions.show_launcher) end,
-    },
+        path = "launcher",
+        description = "буфер обмена",
+        on_press = function()
+            awful.spawn(config.actions.buf_chng)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
+        modifiers = { mod.super, mod.shift },
+        triggers = "d",
+        path = "launcher",
+        description = "Runner (other func)",
+        on_press = function()
+            awful.spawn(config.actions.runner_all)
+        end,
+    }),
+
+    binding.new({
+        modifiers = { mod.super },
+        triggers = "d",
+        path = "launcher",
+        description = "Runner",
+        on_press = function()
+            awful.spawn(config.actions.runner)
+        end,
+    }),
+
+    binding.new({
+        modifiers = { mod.alt },
+        triggers = "space",
+        path = "launcher",
+        description = "KDE Runner",
+        on_press = function()
+            awful.spawn(config.actions.runner2)
+        end,
+    }),
+
+    binding.new({
         modifiers = { mod.super },
         triggers = "Return",
         path = "Launcher",
         description = "Terminal",
-        on_press = function() awful.spawn(config.apps.terminal) end,
-    },
+        on_press = function()
+            awful.spawn(config.apps.terminal)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
-        triggers = "d",
+        triggers = "r",
         path = "Launcher",
         description = "File manager",
-        on_press = function() awful.spawn(config.apps.file_manager) end,
-    },
+        on_press = function()
+            awful.spawn(config.apps.file_manager)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "b",
         path = "Launcher",
         description = "Web browser",
-        on_press = function() awful.spawn(config.apps.browser) end,
-    },
+        on_press = function()
+            awful.spawn(config.apps.browser)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.control, mod.super },
         triggers = "b",
         path = "Launcher",
         description = "Web browser (incognito)",
-        on_press = function() awful.spawn(config.apps.private_browser) end,
-    },
+        on_press = function()
+            awful.spawn(config.apps.private_browser)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = "XF86Calculator",
         path = "Launcher",
         description = "Calculator",
-        on_press = function() awful.spawn(config.apps.calculator) end,
-    },
+        on_press = function()
+            awful.spawn(config.apps.calculator)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "e",
         path = "Launcher",
         description = "Emoji picker",
-        on_press = function() awful.spawn(config.actions.show_emoji_picker) end,
-    },
+        on_press = function()
+            awful.spawn(config.actions.show_emoji_picker)
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = { mod.super, mod.control },
         triggers = binding.group.arrows_vertical,
         path = "Layout",
         description = "Change the number of primary clients",
-        on_press = function(trigger) awful.tag.incnmaster(trigger.y, nil, true) end,
-    },
+        on_press = function(trigger)
+            awful.tag.incnmaster(trigger.y, nil, true)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super, mod.control },
         triggers = binding.group.arrows_horizontal,
         path = "Layout",
         description = "Change the number of secondary columns",
-        on_press = function(trigger) awful.tag.incncol(trigger.x, nil, true) end,
-    },
+        on_press = function(trigger)
+            awful.tag.incncol(trigger.x, nil, true)
+        end,
+    }),
 
-
-    binding.new {
-        modifiers = { mod.super },
+    binding.new({
+        modifiers = { mod.super, mod.alt },
         triggers = "r",
         path = "Tag",
         description = "Rename selected tag",
@@ -175,9 +232,9 @@ local global_bindings = {
             end
             screen.topbar.taglist:rename_tag_inline(tag)
         end,
-    },
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = binding.group.numrow,
         path = "Tag",
@@ -189,9 +246,9 @@ local global_bindings = {
                 tag:view_only()
             end
         end,
-    },
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.control, mod.super },
         triggers = binding.group.numrow,
         path = "Tag",
@@ -203,38 +260,44 @@ local global_bindings = {
                 awful.tag.viewtoggle(tag)
             end
         end,
-    },
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = {
-            { trigger = ",", action = awful.tag.viewprev },
-            { trigger = ".", action = awful.tag.viewnext },
+            { trigger = "Left", action = awful.tag.viewprev },
+            { trigger = "Right", action = awful.tag.viewnext },
         },
         path = "Tag",
         description = "View previous/next tag",
-        on_press = function(trigger) trigger.action() end,
-    },
+        on_press = function(trigger)
+            trigger.action()
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "Escape",
         path = "Tag",
         description = "Go back to previous tag",
-        on_press = function() awful.tag.history.restore() end,
-    },
+        on_press = function()
+            awful.tag.history.restore()
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "u",
         path = "Client",
         description = "Jump to urgent client",
         order = 1000,
-        on_press = function() awful.client.urgent.jumpto() end,
-    },
+        on_press = function()
+            awful.client.urgent.jumpto()
+        end,
+    }),
 
-    binding.new {
+    -- Фокус клиента
+    binding.new({
         modifiers = { mod.super },
         triggers = "Tab",
         path = "Client",
@@ -245,9 +308,29 @@ local global_bindings = {
                 capi.client.focus:raise()
             end
         end,
-    },
+    }),
 
-    binding.new {
+    binding.new({
+        modifiers = { mod.super },
+        triggers = "j",
+        path = "Client",
+        description = "Focus to next client",
+        on_press = function()
+            awful.client.focus.byidx(1)
+        end,
+    }),
+
+    binding.new({
+        modifiers = { mod.super },
+        triggers = "k",
+        path = "Client",
+        description = "Focus to previous client",
+        on_press = function()
+            awful.client.focus.byidx(-1)
+        end,
+    }),
+
+    binding.new({
         modifiers = { mod.shift, mod.super },
         triggers = "n",
         path = { "Client", "State" },
@@ -256,30 +339,32 @@ local global_bindings = {
         on_press = function()
             local client = awful.client.restore()
             if client then
-                client:activate { context = "key.unminimize" }
+                client:activate({ context = "key.unminimize" })
             end
         end,
-    },
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "q",
         path = "Action",
         description = "Generate QR code from clipboard",
-        on_press = function() awful.spawn(config.actions.qr_code_clipboard) end,
-    },
+        on_press = function()
+            awful.spawn(config.actions.qr_code_clipboard)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "z",
         path = "Action",
         description = "Magnifier",
-        on_press = function() services.magnifier.run() end,
-    },
+        on_press = function()
+            services.magnifier.run()
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = {
             { trigger = "XF86AudioLowerVolume", direction = -1 },
@@ -287,35 +372,42 @@ local global_bindings = {
         },
         path = "Volume",
         description = "Change volume",
-        on_press = function(trigger) services.volume.change_volume(trigger.direction * 5) end,
-    },
+        on_press = function(trigger)
+            services.volume.change_volume(trigger.direction * 5)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = "XF86AudioMute",
         path = "Volume",
         description = "Mute",
-        on_press = function() services.volume.toggle_mute() end,
-    },
+        on_press = function()
+            services.volume.toggle_mute()
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = "XF86AudioPlay",
         path = "Media",
         description = "Play/pause",
-        on_press = function() services.media.player:play_pause() end,
-    },
+        on_press = function()
+            services.media.player:play_pause()
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = "XF86AudioStop",
         path = "Media",
         description = "Stop",
-        on_press = function() services.media.player:stop() end,
-    },
+        on_press = function()
+            services.media.player:stop()
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = {
             { trigger = "XF86AudioPrev", offset = -1 },
@@ -323,10 +415,12 @@ local global_bindings = {
         },
         path = "Media",
         description = "Previous/next track",
-        on_press = function(trigger) services.media.player:skip(trigger.offset) end,
-    },
+        on_press = function(trigger)
+            services.media.player:skip(trigger.offset)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = {},
         triggers = {
             { trigger = "XF86AudioRewind", offset = -5 },
@@ -334,10 +428,12 @@ local global_bindings = {
         },
         path = "Media",
         description = "Rewind/fast forward (5s)",
-        on_press = function(trigger) services.media.player:seek(trigger.offset * services.media.player.unit) end,
-    },
+        on_press = function(trigger)
+            services.media.player:seek(trigger.offset * services.media.player.unit)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = {
             { trigger = "XF86AudioRewind", offset = -30 },
@@ -345,101 +441,119 @@ local global_bindings = {
         },
         path = "Media",
         description = "Rewind/fast forward (30s)",
-        on_press = function(trigger) services.media.player:seek(trigger.offset * services.media.player.unit) end,
-    },
+        on_press = function(trigger)
+            services.media.player:seek(trigger.offset * services.media.player.unit)
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "XF86AudioPlay",
         path = "Media",
         description = "Pause all",
-        on_press = function() services.media.player:pause("%all") end,
-    },
+        on_press = function()
+            services.media.player:pause("%all")
+        end,
+    }),
 
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = "XF86AudioStop",
         path = "Media",
         description = "Stop all",
-        on_press = function() services.media.player:stop("%all") end,
-    },
+        on_press = function()
+            services.media.player:stop("%all")
+        end,
+    }),
 
-
-    binding.new {
+    binding.new({
         modifiers = { mod.super },
         triggers = binding.group.arrows,
         path = "Client",
         description = "Change focus",
-        on_press = function(trigger) cclient.focus(nil, trigger.direction) end,
-    },
+        on_press = function(trigger)
+            cclient.focus(nil, trigger.direction)
+        end,
+    }),
 }
 
 if config.features.screenshot_tools then
     gtable.join(global_bindings, {
 
-        binding.new {
+        binding.new({
             modifiers = {},
             triggers = "Print",
             path = { "Screenshot", "Save to file" },
             description = "Interactive selection",
-            on_press = function() services.screenshot.take { mode = "selection", shader = "boxzoom" } end,
-        },
+            on_press = function()
+                services.screenshot.take({ mode = "selection", shader = "boxzoom" })
+            end,
+        }),
 
-        binding.new {
+        binding.new({
             modifiers = { mod.alt },
             triggers = "Print",
             path = { "Screenshot", "Save to file" },
             description = "Current window",
-            on_press = function() services.screenshot.take { mode = "window" } end,
-        },
+            on_press = function()
+                services.screenshot.take({ mode = "window" })
+            end,
+        }),
 
-        binding.new {
+        binding.new({
             modifiers = { mod.control },
             triggers = "Print",
             path = { "Screenshot", "Save to file" },
             description = "Full screen",
-            on_press = function() services.screenshot.take { mode = nil } end,
-        },
+            on_press = function()
+                services.screenshot.take({ mode = nil })
+            end,
+        }),
 
-
-        binding.new {
+        binding.new({
             modifiers = { mod.super },
             triggers = "Print",
             path = { "Screenshot", "Copy to clipboard" },
             description = "Interactive selection",
-            on_press = function() services.screenshot.take { mode = "selection", shader = "boxzoom", output = "clipboard" } end,
-        },
+            on_press = function()
+                services.screenshot.take({ mode = "selection", shader = "boxzoom", output = "clipboard" })
+            end,
+        }),
 
-        binding.new {
+        binding.new({
             modifiers = { mod.alt, mod.super },
             triggers = "Print",
             path = { "Screenshot", "Copy to clipboard" },
             description = "Current window",
-            on_press = function() services.screenshot.take { mode = "window", output = "clipboard" } end,
-        },
+            on_press = function()
+                services.screenshot.take({ mode = "window", output = "clipboard" })
+            end,
+        }),
 
-        binding.new {
+        binding.new({
             modifiers = { mod.control, mod.super },
             triggers = "Print",
             path = { "Screenshot", "Copy to clipboard" },
             description = "Full screen",
-            on_press = function() services.screenshot.take { mode = nil, output = "clipboard" } end,
-        },
-
+            on_press = function()
+                services.screenshot.take({ mode = nil, output = "clipboard" })
+            end,
+        }),
     })
 end
 
 if config.features.wallpaper_menu then
     gtable.join(global_bindings, {
 
-        binding.new {
+        binding.new({
             modifiers = { mod.shift, mod.super, mod.control },
             triggers = "w",
             path = "Action",
             description = "Restore wallpaper",
-            on_press = function() services.wallpaper.restore() end,
-        },
-
+            on_press = function()
+                services.wallpaper.restore()
+            end,
+        }),
     })
 end
 

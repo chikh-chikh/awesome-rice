@@ -13,8 +13,8 @@ local mebox = require("widget.mebox")
 local client_bindings = {
 
     binding.new {
-        modifiers = { mod.super, mod.control },
-        triggers = "Escape",
+        modifiers = { mod.super },
+        triggers = "c",
         path = "Client",
         description = "Quit",
         order = 0,
