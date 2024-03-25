@@ -4,11 +4,21 @@ local open = io.open
 local format = string.format
 local gears = require("gears")
 
+local lfs = require('lfs')
+
+for filename in lfs.dir('/sys/class/net') do
+    if filename ~= 'lo' and filename ~= '.' and filename ~= '..' then
+        if lfs.attributes('/sys/class/net/' .. filename .. '/wireless') then
+            radio_adapter = filename
+        end
+    end
+end
 
 local network_service = {
     config = {
         interval = 2,
         interface = "wlp7s0",
+        -- interface = radio_adapter
     },
     last_data = {
         time = 0,
