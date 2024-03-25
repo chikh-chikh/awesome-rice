@@ -15,8 +15,36 @@ local core = require("core")
 local places = require("rice.places")
 
 
+local hostname = popen("uname -n"):read()
+
+local function run_once(cmd)
+	local findme = cmd
+	local firstspace = cmd:find(" ")
+	if firstspace then
+		findme = cmd:sub(0, firstspace - 1)
+	end
+	awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd), false)
+end
+
+if hostname == "pcRU" then
+	ImaGes = "still"
+elseif hostname == "vaio" then
+	ImaGes = "still"
+else
+	ImaGes = "still"
+end
+
+if ImaGes == "still" then
+	run_once("echo -e '#!/bin/sh \nfeh --no-fehbg --bg-fill --randomize ~/.config/awesome/theme/wallpaper/still' >~/.fehbg ")
+elseif ImaGes == "down" then
+	run_once("echo -e '#!/bin/sh \nfeh --no-fehbg --bg-fill --randomize ~/.config/awesome/theme/wallpaper/down' >~/.fehbg ")
+end
+
+
+
 local feh_prefix = ".fehbg"
 local feh_script = core.path.home .. "/" .. feh_prefix
+-- feh --no-fehbg --bg-fill --randomize ~/.config/awesome/theme/wallpaper/down
 
 local wallpaper_service = {}
 
