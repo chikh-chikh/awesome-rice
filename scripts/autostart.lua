@@ -1,6 +1,6 @@
 local awful = require("awful")
 -- local gears = require("gears")
-local hostname = io.popen("uname -n"):read()
+-- local hostname = io.popen("uname -n"):read()
 
 local function run_once(cmd)
 	local findme = cmd
@@ -23,20 +23,6 @@ elseif hostname == "vaio" then
 	run_once("xrandr --output VGA-0 --mode 1366x768 --rotate normal --left-of LVDS-0 --noprimary")
 end
 --]]
-
-if hostname == "pcRU" then
-	ImaGes = "still"
-elseif hostname == "vaio" then
-	ImaGes = "still"
-else
-	ImaGes = "still"
-end
-
-if ImaGes == "still" then
-	run_once("feh --bg-fill --randomize ~/.config/awesome/theme/wallpaper/still")
-elseif ImaGes == "down" then
-	run_once("feh --bg-fill --randomize ~/.config/awesome/theme/wallpaper/down")
-end
 
 -- run_once('xmodmap -e "pointer = 3 2 1 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 4 5')
 

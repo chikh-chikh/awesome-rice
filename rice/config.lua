@@ -13,12 +13,12 @@ local config = {}
 ---@field redshift_widget boolean?
 ---@field wallpaper_menu boolean?
 config.features = {
-    screenshot_tools = false,
+    screenshot_tools = true,
     magnifier_tools = false,
     torrent_widget = false,
     weather_widget = false,
     redshift_widget = false,
-    wallpaper_menu = false,
+    wallpaper_menu = true,
 }
 
 config.wm = {

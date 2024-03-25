@@ -29,9 +29,9 @@ theme.edge_gap = dpi(32)
 theme.icon_theme = "Archdroid-Amber"
 
 ----------------------------------------------------------------------------------------------------
-
-theme.font_name = "Roboto Mono Nerd Font"
-theme.font_size = 12
+-- $fc-list :lang=ru
+theme.font_name = "Oswald"
+theme.font_size = 10
 
 -- theme.taglist_font = "awesomewm-font 16"
 -- TODO: Move to the utils?
@@ -178,7 +178,7 @@ theme.capsule = {
     -- TODO: Move these into `default_style`?
     item_content_spacing = dpi(8),
     item_spacing = dpi(16),
-    bar_width = dpi(80),
+    bar_width = dpi(30),
     bar_height = dpi(12),
     border_radius = dpi(5),
 }

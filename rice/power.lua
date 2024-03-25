@@ -12,7 +12,8 @@ power.commands = {
     suspend = "systemctl suspend",
     kill_session = "loginctl kill-session ''",
     lock_session = "loginctl lock-session",
-    lock_screen = "light-locker-command --lock",
+    -- lock_screen = "light-locker-command --lock",
+    lock_screen = "i3lock -i $XDG_CONFIG_HOME/awesome/theme/wallpaper/Desktop-Burberry-Photos.jpg",
 }
 
 return power
