@@ -4,21 +4,25 @@ local open = io.open
 local format = string.format
 local gears = require("gears")
 
-local lfs = require('lfs')
+local lfs = require("lfs")
 
-for filename in lfs.dir('/sys/class/net') do
-    if filename ~= 'lo' and filename ~= '.' and filename ~= '..' then
-        if lfs.attributes('/sys/class/net/' .. filename .. '/wireless') then
-            radio_adapter = filename
+local function check_file()
+    local radio_adapter
+    for filename in lfs.dir("/sys/class/net") do
+        if filename ~= "lo" and filename ~= "." and filename ~= ".." then
+            if lfs.attributes("/sys/class/net/" .. filename .. "/wireless") then
+                radio_adapter = filename
+            end
         end
     end
+    return radio_adapter
 end
 
 local network_service = {
     config = {
         interval = 2,
-        interface = "wlp7s0",
-        -- interface = radio_adapter
+        -- interface = "wlp7s0",
+        interface = check_file(),
     },
     last_data = {
         time = 0,
@@ -48,7 +52,8 @@ local function read_data()
     local connected = read_file(format("/sys/class/net/%s/operstate", network_service.config.interface), "l") == "up"
     local download, upload
     if connected then
-        download = read_file(format("/sys/class/net/%s/statistics/rx_bytes", network_service.config.interface), "n") or 0
+        download = read_file(format("/sys/class/net/%s/statistics/rx_bytes", network_service.config.interface), "n")
+            or 0
         upload = read_file(format("/sys/class/net/%s/statistics/tx_bytes", network_service.config.interface), "n") or 0
     end
     return connected, download, upload
@@ -63,7 +68,8 @@ local function update()
     if success then
         if connected then
             local diff = now - last_data.time
-            local is_valid = diff > 0 and diff < 3 * network_service.config.interval
+            local is_valid = diff > 0
+                and diff < 3 * network_service.config.interval
                 and last_data.download
                 and last_data.upload
             if is_valid then
@@ -91,11 +97,12 @@ local function update()
 end
 
 function network_service.watch()
-    network_service.timer = network_service.timer or gears.timer {
-        timeout = network_service.config.interval,
-        call_now = true,
-        callback = update,
-    }
+    network_service.timer = network_service.timer
+        or gears.timer({
+            timeout = network_service.config.interval,
+            call_now = true,
+            callback = update,
+        })
     network_service.timer:again()
 end
 

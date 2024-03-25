@@ -1,0 +1,25 @@
+#!/usr/bin/env lua5.1
+
+local lfs = require("lfs")
+
+local function check_file()
+	local radio_adapter
+	for filename in lfs.dir("/sys/class/net") do
+		if filename ~= "lo" and filename ~= "." and filename ~= ".." then
+			if lfs.attributes("/sys/class/net/" .. filename .. "/wireless") then
+				radio_adapter = filename
+			end
+		end
+	end
+	return radio_adapter
+end
+
+local status, radio_adapter = pcall(check_file)
+if status then
+    print(radio_adapter)
+else
+    print("Ошибка: " .. radio_adapter)
+end
+
+-- local radio_adapter = check_file()
+-- print(radio_adapter)
