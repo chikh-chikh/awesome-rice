@@ -349,9 +349,7 @@ local global_bindings = {
         triggers = "q",
         path = "Action",
         description = "Generate QR code from clipboard",
-        on_press = function()
-            awful.spawn(config.actions.qr_code_clipboard)
-        end,
+        on_press = function() awful.spawn(config.actions.qr_code_clipboard) end,
     }),
 
 
@@ -517,7 +515,7 @@ end
 if config.features.wallpaper_menu then
     global_bindings = {
 
-        binding.new({
+        binding.new {
             modifiers = { mod.shift, mod.super, mod.control },
             triggers = "w",
             path = "Action",
