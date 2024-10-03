@@ -53,9 +53,6 @@ function taglist:rename_tag_inline(tag)
                 if name:match("^%s*$") then
                     name = tostring(tag.index)
                 end
-                if not name:match("^%d") then
-                    name = format("%d:%s", tag.index, name)
-                end
                 textbox:set_text(name)
                 tag.name = name
                 capi.mousegrabber.stop()
@@ -205,13 +202,13 @@ function taglist.new(wibar)
                     buttons = binding.awful_buttons {
                         binding.awful({}, btn.left, function()
                             awful.tag.add(nil, core_tag.build {
-                                wibar.screen,
+                                screen = wibar.screen,
                                 volatile = true,
                             }):view_only()
                         end),
                         binding.awful({}, btn.middle, function()
                             awful.tag.add(nil, core_tag.build {
-                                wibar.screen,
+                                screen = wibar.screen,
                                 volatile = true,
                             })
                         end),
