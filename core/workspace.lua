@@ -20,12 +20,14 @@ do
     function Item:get_tag()
         local tag = self.container.value
         if not tag or not tag.activated then
-            tag = atag.add(self.key, core_tag.build(self:factory()))
+            tag = atag.add(nil, core_tag.build(self:factory()))
             self.container.value = tag
         end
         return tag
     end
 
+    ---@param key string
+    ---@param factory fun(): tag
     function M.add(key, factory)
         M.items[key] = setmetatable({
             key = key,

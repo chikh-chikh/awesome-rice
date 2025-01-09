@@ -23,11 +23,12 @@ local layouts = require("rice.layouts")
 
 local tags = {
     names = {
-        "",
-        "",
-        "",
-        "",
-        "",
+        "Main",
+        -- "",
+        -- "",
+        -- "",
+        -- "",
+        -- "",
     },
 }
 capi.awesome.connect_signal("tag::build", function(tag, args)
@@ -39,10 +40,11 @@ end)
 
 capi.screen.connect_signal("request::desktop_decoration", function(screen)
     for index, name in pairs(tags.names) do
-        awful.tag.add(name, core_tag.build {
+        awful.tag.add(nil, core_tag.build {
             name = name,
             screen = screen,
             selected = index == 1,
+            volatile = false,
         })
     end
 end)

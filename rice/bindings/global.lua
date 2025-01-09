@@ -1,6 +1,7 @@
 local capi = Capi
 local awful = require("awful")
 local aplacement = require("awful.placement")
+local ctag = require("core.tag")
 local cclient = require("core.client")
 local binding = require("core.binding")
 local mod = binding.modifier
@@ -13,6 +14,7 @@ local menu_templates = require("ui.menu.templates")
 local mebox = require("widget.mebox")
 local bindbox = require("widget.bindbox")
 local config = require("rice.config")
+
 
 local global_bindings = {
 
@@ -56,7 +58,15 @@ local global_bindings = {
         end,
     }),
 
-    binding.new({
+    binding.new {
+        modifiers = { mod.super },
+        triggers = btn.right,
+        path = "Awesome",
+        description = "Resize tiling clients",
+        on_press = function() cclient.mouse_resize() end,
+    },
+
+    binding.new ({
         modifiers = {},
         triggers = btn.right,
         path = "Awesome",
@@ -87,7 +97,7 @@ local global_bindings = {
     }),
 
     binding.new({
-        modifiers = { mod.super, mod.shift },
+        modifiers = { mod.super, mod.control },
         triggers = "r",
         path = "Awesome",
         description = "Restart Awesome",
@@ -99,8 +109,8 @@ local global_bindings = {
     binding.new({
         modifiers = { mod.super },
         triggers = "a",
-        path = "launcher",
-        description = "буфер обмена",
+        path = "Launcher",
+        description = "Clipboard",
         on_press = function()
             awful.spawn(config.actions.buf_chng)
         end,
@@ -109,7 +119,7 @@ local global_bindings = {
     binding.new({
         modifiers = { mod.super, mod.shift },
         triggers = "d",
-        path = "launcher",
+        path = "Launcher",
         description = "Runner (other func)",
         on_press = function()
             awful.spawn(config.actions.runner_all)
@@ -119,7 +129,7 @@ local global_bindings = {
     binding.new({
         modifiers = { mod.super },
         triggers = "d",
-        path = "launcher",
+        path = "Launcher",
         description = "Runner",
         on_press = function()
             awful.spawn(config.actions.runner)
@@ -129,7 +139,7 @@ local global_bindings = {
     binding.new({
         modifiers = { mod.alt },
         triggers = "space",
-        path = "launcher",
+        path = "Launcher",
         description = "KDE Runner",
         on_press = function()
             awful.spawn(config.actions.runner2)
@@ -148,9 +158,9 @@ local global_bindings = {
 
     binding.new({
         modifiers = { mod.super },
-        triggers = "r",
+        triggers = "e",
         path = "Launcher",
-        description = "File manager",
+        description = "File explorer",
         on_press = function()
             awful.spawn(config.apps.file_manager)
         end,
@@ -186,15 +196,15 @@ local global_bindings = {
         end,
     }),
 
-    binding.new({
-        modifiers = { mod.super },
-        triggers = "e",
-        path = "Launcher",
-        description = "Emoji picker",
-        on_press = function()
-            awful.spawn(config.actions.show_emoji_picker)
-        end,
-    }),
+    -- binding.new({
+    --     modifiers = { mod.super },
+    --     triggers = "e",
+    --     path = "Launcher",
+    --     description = "Emoji picker",
+    --     on_press = function()
+    --         awful.spawn(config.actions.show_emoji_picker)
+    --     end,
+    -- }),
 
     binding.new({
         modifiers = { mod.super, mod.control },
@@ -217,7 +227,7 @@ local global_bindings = {
     }),
 
     binding.new({
-        modifiers = { mod.super, mod.alt },
+        modifiers = { mod.super },
         triggers = "r",
         path = "Tag",
         description = "Rename selected tag",
@@ -240,8 +250,9 @@ local global_bindings = {
         path = "Tag",
         description = "Show only the specified tag",
         on_press = function(trigger)
-            local screen = awful.screen.focused()
-            local tag = screen and screen.tags[trigger.index]
+            -- local screen = awful.screen.focused()
+            -- local tag = screen and screen.tags[trigger.index]
+            local tag = ctag.get_or_create(trigger.index)
             if tag then
                 tag:view_only()
             end
@@ -254,8 +265,10 @@ local global_bindings = {
         path = "Tag",
         description = "Toggle tag",
         on_press = function(trigger)
-            local screen = awful.screen.focused()
-            local tag = screen and screen.tags[trigger.index]
+            -- local screen = awful.screen.focused()
+            -- local tag = screen and screen.tags[trigger.index]
+            local tag = ctag.get_or_create(trigger.index)
+
             if tag then
                 awful.tag.viewtoggle(tag)
             end
@@ -267,6 +280,8 @@ local global_bindings = {
         triggers = {
             { trigger = "Left", action = awful.tag.viewprev },
             { trigger = "Right", action = awful.tag.viewnext },
+            { trigger = ",", action = awful.tag.viewprev },
+            { trigger = ".", action = awful.tag.viewnext },
         },
         path = "Tag",
         description = "View previous/next tag",

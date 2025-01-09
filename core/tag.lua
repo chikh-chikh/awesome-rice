@@ -1,8 +1,8 @@
 local capi = Capi
 local type = type
 local ipairs = ipairs
-local tostring = tostring
 local ruled = require("ruled")
+local ascreen = require("awful.screen")
 local atag = require("awful.tag")
 local gtable = require("gears.table")
 
@@ -14,11 +14,28 @@ local M = {}
 function M.build(args)
     args = args or {}
     args.screen = args.screen or capi.screen.primary
-    args.name = args.name or tostring(1 + #args.screen.tags)
+    args.name = args.name or ""
 
     local tag = {}
     capi.awesome.emit_signal("tag::build", tag, args)
     gtable.crush(tag, args)
+    return tag
+end
+
+---@param tag_index integer
+---@param screen? screen
+---@return tag?
+function M.get_or_create(tag_index, screen)
+    screen = screen or ascreen.focused()
+    if not screen then
+        return nil
+    end
+    local tag = screen.tags[tag_index]
+    if not tag then
+        tag = atag.add(nil, M.build {
+            screen = screen,
+        })
+    end
     return tag
 end
 
@@ -30,13 +47,11 @@ function ruled.client.high_priority_properties.new_tag(client, value, properties
         args = {
             name = client.class,
             screen = client.screen,
-            volatile = true,
         }
     elseif value_type == "string" then
         args = {
             name = value,
             screen = client.screen,
-            volatile = true,
         }
     elseif value_type == "table" then
         args = gtable.clone(value)
